@@ -13,7 +13,7 @@ function MyTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Notifications"
-      activeColor="#e91e63"
+      activeColor="#553C18"
       labelStyle={{ fontSize: 12 }}
       style={{ backgroundColor: "tomato" }}
     >
@@ -21,7 +21,7 @@ function MyTabs() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarColor: 'silver',
+          tabBarColor: "silver",
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -43,7 +43,7 @@ function MyTabs() {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarColor: "green",
+          tabBarColor: "#ffb347",
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
@@ -54,8 +54,9 @@ function MyTabs() {
         name="Cart"
         component={CartScreen}
         options={{
-          tabBarColor: "grey",
+          tabBarColor: "#B247FF",
           tabBarLabel: "Cart",
+
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="cart" color={color} size={26} />
           ),
