@@ -40,6 +40,22 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{
+          tabBarColor: "#B247FF",
+          tabBarLabel: "Dine",
+
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="food-fork-drink"
+              color={color}
+              size={26}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -47,18 +63,6 @@ function MyTabs() {
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Cart"
-        component={CartScreen}
-        options={{
-          tabBarColor: "#B247FF",
-          tabBarLabel: "Cart",
-
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="cart" color={color} size={26} />
           ),
         }}
       />
