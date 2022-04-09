@@ -21,7 +21,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Navbar />
-      <StatusBar backgroundColor="orange" barStyle="dark-content" />
+      <StatusBar style="light" />
     </View>
   );
 }

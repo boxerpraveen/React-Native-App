@@ -1,8 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import PrimaryButton from "../PrimaryButton";
+import PrimaryButton from "../UI/PrimaryButton";
 
-const AfterSignUp = ({ userName, password, email, phone, form }) => {
+const AfterSignUp = ({ userName, password, email, phone, isLogin }) => {
+  const navigation = useNavigation();
+
+  function homePageHandler() {
+    navigation.replace("App");
+  }
+
   return (
     <View>
       <View style={styles.headerTextContainer}>
@@ -11,20 +18,35 @@ const AfterSignUp = ({ userName, password, email, phone, form }) => {
         </Text>
       </View>
       <View style={styles.userContainer}>
-        <Text style={styles.userText}>
-          User Name is -<Text style={styles.userTextValue}> {userName}</Text>
-        </Text>
+        {!isLogin && (
+          <Text style={styles.userText}>
+            User Name is -<Text style={styles.userTextValue}> {userName}</Text>
+          </Text>
+        )}
+        {isLogin && (
+          <Text style={styles.userText}>
+            Email Address is -{" "}
+            <Text style={styles.userTextValue}> {email}</Text>
+          </Text>
+        )}
         <Text style={styles.userText}>
           Password is - <Text style={styles.userTextValue}> {password}</Text>
         </Text>
-        <Text style={styles.userText}>
-          Email Address is - <Text style={styles.userTextValue}> {email}</Text>
-        </Text>
-        <Text style={styles.userText}>
-          Phone Number is -<Text style={styles.userTextValue}> {phone}</Text>
-        </Text>
+        {!isLogin && (
+          <Text style={styles.userText}>
+            Email Address is -{" "}
+            <Text style={styles.userTextValue}> {email}</Text>
+          </Text>
+        )}
+        {!isLogin && (
+          <Text style={styles.userText}>
+            Phone Number is -<Text style={styles.userTextValue}> {phone}</Text>
+          </Text>
+        )}
       </View>
-      <PrimaryButton style={styles.returnBtn}>Return</PrimaryButton>
+      <PrimaryButton onPress={homePageHandler} style={styles.returnBtn}>
+        Return
+      </PrimaryButton>
     </View>
   );
 };
