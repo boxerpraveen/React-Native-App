@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -7,14 +7,17 @@ import FavoriteScreen from "../screens/FavoriteScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../screens/ProfileScreen";
 import CartScreen from "../screens/CartScreen";
-import LoginScreen from "../screens/LoginScreen";
-import SignUpScreen from "../screens/SignUpScreen";
+import LoginScreen from "../screens/Auth/LoginScreen";
+import SignUpScreen from "../screens/Auth/SignUpScreen";
 import IconButton from "./UI/IconButton";
+import AuthContentProvider, { AuthContext } from "../store/auth-context";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function AuthStack() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -32,7 +35,7 @@ function AuthStack() {
         options={({ navigation }) => ({
           headerRight: ({ tintColor }) => (
             <IconButton
-              icon="exit"
+              icon="exit-outline"
               color={tintColor}
               size={24}
               onPress={() => navigation.replace("Login")}
@@ -47,7 +50,6 @@ function AuthStack() {
 function MyTabs() {
   return (
     <Tab.Navigator
-      // initialRouteName="Profile"
       activeColor="#553C18"
       labelStyle={{ fontSize: 12 }}
       style={{ backgroundColor: "tomato" }}
@@ -107,8 +109,10 @@ function MyTabs() {
 
 export default function Navbar() {
   return (
-    <NavigationContainer>
-      <AuthStack />
-    </NavigationContainer>
+    <AuthContentProvider>
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
+    </AuthContentProvider>
   );
 }

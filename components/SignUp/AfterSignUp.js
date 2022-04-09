@@ -45,7 +45,7 @@ const AfterSignUp = ({ userName, password, email, phone, isLogin }) => {
         )}
       </View>
       <PrimaryButton onPress={homePageHandler} style={styles.returnBtn}>
-        Return
+        Return To Home
       </PrimaryButton>
     </View>
   );
