@@ -14,7 +14,8 @@ const AfterSignUp = ({ userName, password, email, phone, isLogin }) => {
     <View>
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText}>
-          Successfully created your account!
+        {!isLogin &&  'Successfully created your account!'}
+        {isLogin &&  'Successfully Logging in your account!'}
         </Text>
       </View>
       <View style={styles.userContainer}>

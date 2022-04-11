@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Text, View } from "react-native";
 
 const CartScreen = () => {
@@ -7,6 +7,6 @@ const CartScreen = () => {
       <Text>CartScreen!</Text>
     </View>
   );
-}
+};
 
-export default CartScreen
+export default CartScreen;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import {
   Image,
   View,
@@ -6,12 +6,32 @@ import {
   ImageBackground,
   Text,
   ScrollView,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Card from "../../components/UI/Card";
 import AuthForm from "../../components/SignUp/AuthForm";
+import { AuthContext } from "../../utils/auth-context";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
 
 const SignUpScreen = () => {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const authCtx = useContext(AuthContext);
+
+  async function signUpHandler(email) {
+    setIsAuthenticating(true);
+    try {
+      authCtx.authenticate(email);
+    } catch (error) {
+      Alert.alert(
+        "Authentication failed",
+        "could not create user, please check your input and try again later."
+      );
+      setIsAuthenticating(false);
+    }
+  }
+
   return (
     <LinearGradient colors={["#ffb347", "#ffcc33"]} style={styles.rootScreen}>
       <ImageBackground
@@ -34,7 +54,7 @@ const SignUpScreen = () => {
               Enjoy your time with our Clean, Healthy and Delicious Food!{" "}
             </Text>
             <Card style={styles.card}>
-              <AuthForm />
+              <AuthForm onAuthenticate={signUpHandler} />
             </Card>
 
             <Text>Terms & Condition</Text>

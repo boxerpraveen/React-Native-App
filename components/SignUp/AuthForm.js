@@ -7,7 +7,7 @@ import InputField from "../UI/InputField";
 import PrimaryButton from "../UI/PrimaryButton";
 import AfterSignUp from "./AfterSignUp";
 
-const AuthForm = ({ isLogin }) => {
+const AuthForm = ({ isLogin, onAuthenticate }) => {
   const navigation = useNavigation();
   const [formValid, setFormValid] = useState(false);
   const [inputs, setInputs] = useState({
@@ -54,6 +54,8 @@ const AuthForm = ({ isLogin }) => {
       return regEx.test(value);
     };
 
+    const emailValue = signUpData.emailAddress;
+
     const userNameIsValid = signUpData.userName.trim().length > 0;
     const passwordIsValid = passLengthValidation(signUpData.password.trim());
     const confirmPasswordIsValid =
@@ -95,6 +97,7 @@ const AuthForm = ({ isLogin }) => {
           },
         };
       });
+      onAuthenticate(emailValue);
     }
     if (
       (userNameIsValid &&
@@ -195,10 +198,7 @@ const AuthForm = ({ isLogin }) => {
           />
         )}
       </View>
-      <PrimaryButton
-        style={styles.createAccountButton}
-        onPress={() => submitHandler()}
-      >
+      <PrimaryButton style={styles.createAccountButton} onPress={submitHandler}>
         {!isLogin ? "Create a New Account" : "Login"}
       </PrimaryButton>
       <FlatButton style={styles.signInButton} onPress={switchAuthModeHandler}>

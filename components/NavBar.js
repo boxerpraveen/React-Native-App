@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -10,14 +10,13 @@ import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import IconButton from "./UI/IconButton";
-import AuthContentProvider, { AuthContext } from "../store/auth-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthContentProvider from "../utils/auth-context";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function AuthStack() {
-  const authCtx = useContext(AuthContext);
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -38,7 +37,10 @@ function AuthStack() {
               icon="exit-outline"
               color={tintColor}
               size={24}
-              onPress={() => navigation.replace("Login")}
+              onPress={() => {
+                AsyncStorage.removeItem("User");
+                navigation.replace("Login");
+              }}
             />
           ),
         })}
