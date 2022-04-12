@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,12 +6,12 @@ import HomeScreen from "../screens/HomeScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../screens/ProfileScreen";
-import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import IconButton from "./UI/IconButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AuthContentProvider from "../utils/auth-context";
+import DineInScreen from "../screens/DineInScreen";
+import { AuthContext } from "../utils/auth-context";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,22 +28,30 @@ function AuthStack() {
     >
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignUpScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AuthenticateStack() {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         name="App"
         component={MyTabs}
-        options={({ navigation }) => ({
+        options={{
+          headerStyle: { backgroundColor: "#553C18" },
+          headerTintColor: "white",
           headerRight: ({ tintColor }) => (
             <IconButton
               icon="exit-outline"
               color={tintColor}
               size={24}
-              onPress={() => {
-                AsyncStorage.removeItem("User");
-                navigation.replace("Login");
-              }}
+              onPress={authCtx.logout}
             />
           ),
-        })}
+        }}
       />
     </Stack.Navigator>
   );
@@ -53,6 +61,7 @@ function MyTabs() {
   return (
     <Tab.Navigator
       activeColor="#553C18"
+      initialRouteName="Home"
       labelStyle={{ fontSize: 12 }}
       style={{ backgroundColor: "tomato" }}
     >
@@ -80,7 +89,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Dine"
-        component={CartScreen}
+        component={DineInScreen}
         options={{
           tabBarColor: "#B247FF",
           tabBarLabel: "Dine",
@@ -110,11 +119,26 @@ function MyTabs() {
 }
 
 export default function Navbar() {
+  const authCtx = useContext(AuthContext);
+
+  console.log(authCtx.token);
+  console.log(authCtx.isAuthenticate);
+
+  useEffect(() => {
+    async function fetchToken() {
+      const storedData = await AsyncStorage.getItem("USER");
+
+      if (storedData) {
+        authCtx.authenticate(storedData);
+      }
+    }
+    fetchToken();
+  }, []);
+
   return (
-    <AuthContentProvider>
-      <NavigationContainer>
-        <AuthStack />
-      </NavigationContainer>
-    </AuthContentProvider>
+    <NavigationContainer>
+      {!authCtx.isAuthenticate && <AuthStack />}
+      {authCtx.isAuthenticate && <AuthenticateStack />}
+    </NavigationContainer>
   );
 }

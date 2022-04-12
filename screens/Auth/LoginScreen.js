@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import {
   Image,
   View,
@@ -10,28 +10,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import Card from "../../components/UI/Card";
 import AuthForm from "../../components/SignUp/AuthForm";
-import { AuthContext } from "../../utils/auth-context";
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
 
 const LoginScreen = () => {
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  const authCtx = useContext(AuthContext);
-
-  async function loginHandler(email) {
-    setIsAuthenticating(true);
-    try {
-      const token = await email;
-      authCtx.authenticate(token);
-    } catch (error) {
-      Alert.alert(
-        "Authentication failed!",
-        "Could not log you in. Please check credentials or try again later!"
-      );
-      setIsAuthenticating(false);
-    }
-  }
-
   return (
     <LinearGradient colors={["#ffb347", "#ffcc33"]} style={styles.rootScreen}>
       <ImageBackground
@@ -54,7 +34,7 @@ const LoginScreen = () => {
               Enjoy your time with our Clean, Healthy and Delicious Food!{" "}
             </Text>
             <Card style={styles.card}>
-              <AuthForm isLogin onAuthenticate={loginHandler} />
+              <AuthForm isLogin />
             </Card>
             <Text>Terms & Condition</Text>
           </View>

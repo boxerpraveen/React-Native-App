@@ -1,21 +1,21 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { AuthContext } from "../../utils/auth-context";
 import PrimaryButton from "../UI/PrimaryButton";
 
 const AfterSignUp = ({ userName, password, email, phone, isLogin }) => {
-  const navigation = useNavigation();
+  const authCtx = useContext(AuthContext);
 
   function homePageHandler() {
-    navigation.replace("App");
+    authCtx.authenticate(email);
   }
 
   return (
     <View>
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerText}>
-        {!isLogin &&  'Successfully created your account!'}
-        {isLogin &&  'Successfully Logging in your account!'}
+          {!isLogin && "Successfully created your account!"}
+          {isLogin && "Successfully Logging in your account!"}
         </Text>
       </View>
       <View style={styles.userContainer}>

@@ -1,10 +1,9 @@
 //import liraries
 import React from "react";
 import { StyleSheet, TextInput, Text, View, Pressable } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // create a component
-const InputField = ({ style, invalid, textInputConfig, label }) => {
+const InputField = ({ style, invalid, textInputConfig, label, isLogin }) => {
   let inputStyles = [styles.TextInput, style];
   let labelStyles = [styles.label];
   let invalidText;
@@ -12,7 +11,6 @@ const InputField = ({ style, invalid, textInputConfig, label }) => {
   if (invalid) {
     inputStyles.push(styles.invalidInput);
     labelStyles.push(styles.invalidText);
-
     if (label === "Username") {
       invalidText = (
         <Text style={styles.invalidText}>Please check your UserName.</Text>
@@ -21,8 +19,9 @@ const InputField = ({ style, invalid, textInputConfig, label }) => {
     if (label === "Password") {
       invalidText = (
         <Text style={styles.invalidText}>
-          Password should between 6 to 20 characters which contain at least 1
-          numeric digit, 1 uppercase and 1 lowercase letter
+          {isLogin
+            ? "Please check your password"
+            : "Password should between 6 to 20 characters which contain at least 1 numeric digit, 1 uppercase and 1 lowercase letter"}
         </Text>
       );
     }
@@ -57,9 +56,6 @@ const InputField = ({ style, invalid, textInputConfig, label }) => {
             style={inputStyles}
             placeholderTextColor={!invalid ? "#a1a1a1" : "red"}
           />
-          {/* <Pressable onPress={handlePasswordVisibility}>
-          <MaterialCommunityIcons name={"eye"} size={22} color="#232323" />
-          </Pressable> */}
         </View>
         {invalidText}
       </View>
