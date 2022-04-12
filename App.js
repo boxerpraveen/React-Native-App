@@ -3,6 +3,7 @@ import { StyleSheet, View, StatusBar } from "react-native";
 import Navbar from "./components/NavBar";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import { AuthContentProvider } from "./utils/auth-context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,7 +21,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Navbar />
+      <AuthContentProvider>
+        <Navbar />
+      </AuthContentProvider>
       <StatusBar style="light" />
     </View>
   );
