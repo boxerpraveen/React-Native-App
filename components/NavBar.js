@@ -121,8 +121,7 @@ function MyTabs() {
 export default function Navbar() {
   const authCtx = useContext(AuthContext);
 
-  console.log(authCtx.token);
-  console.log(authCtx.isAuthenticate);
+
 
   useEffect(() => {
     async function fetchToken() {

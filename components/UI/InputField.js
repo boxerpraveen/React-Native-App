@@ -44,7 +44,7 @@ const InputField = ({ style, invalid, textInputConfig, label, isLogin }) => {
         </Text>
       );
     }
-  }
+  } 
 
   return (
     <>

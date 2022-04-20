@@ -12,11 +12,11 @@ const AuthForm = ({ isLogin }) => {
 
   const [formValid, setFormValid] = useState(false);
   const [inputs, setInputs] = useState({
-    userName: { value: "", isValid: true },
-    password: { value: "", isValid: true },
-    confirmPassword: { value: "", isValid: true },
-    emailAddress: { value: "", isValid: true },
-    phoneNumber: { value: "", isValid: true },
+    userName: { value: "", isValid: false },
+    password: { value: "", isValid: false },
+    confirmPassword: { value: "", isValid: false },
+    emailAddress: { value: "", isValid: false },
+    phoneNumber: { value: "", isValid: false },
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
